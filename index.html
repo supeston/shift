@@ -130,8 +130,6 @@ footer p{color:var(--text-muted);font-size:.85rem}
 .empty-state{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--text-muted);font-size:1.1rem}
 .scroll-reveal{opacity:1;transform:none}
 .card{transition:box-shadow 0.4s ease,border-color 0.4s ease,transform 0.4s ease}
-
-/* Mobile bottom search bar - Liquid Glass */
 .mobile-search-bar{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(150%);z-index:999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
 .mobile-search-bar.visible{transform:translateX(-50%) translateY(0)}
 .mobile-search-bar .search-pill{position:relative;display:flex;align-items:center;gap:10px;width:130px;max-width:130px;padding:14px 22px;background:rgba(255,255,255,0.1);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;box-shadow:0 8px 32px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.15),0 0 60px rgba(255,255,255,0.08);cursor:pointer;transition:width 1.2s cubic-bezier(0.16,1,0.3,1),max-width 1.2s cubic-bezier(0.16,1,0.3,1),padding 1.2s cubic-bezier(0.16,1,0.3,1),background 0.4s ease,box-shadow 0.4s ease;overflow:hidden}
@@ -140,18 +138,15 @@ footer p{color:var(--text-muted);font-size:.85rem}
 .mobile-search-bar .search-pill-label{font-size:.9rem;font-weight:500;color:rgba(255,255,255,0.8);white-space:nowrap;transition:opacity 0.8s ease,width 1.2s cubic-bezier(0.16,1,0.3,1),margin 1.2s cubic-bezier(0.16,1,0.3,1)}
 .mobile-search-bar .search-pill input{position:absolute;left:48px;top:0;bottom:0;width:calc(100% - 60px);background:transparent;border:none;outline:none;color:#fff;font-size:0;opacity:0;pointer-events:none;transition:opacity 0.6s ease 0.3s,font-size 0.3s ease}
 .mobile-search-bar .search-pill input::placeholder{color:rgba(255,255,255,0.5)}
-/* Expanded state */
 .mobile-search-bar.expanded .search-pill{width:calc(100vw - 40px);max-width:450px;padding:16px 24px;background:rgba(255,255,255,0.15);box-shadow:0 16px 50px rgba(0,0,0,0.6),inset 0 1px 0 rgba(255,255,255,0.25),0 0 100px rgba(255,255,255,0.12)}
 .mobile-search-bar.expanded .search-pill-label{opacity:0;width:0;margin-left:-10px}
 .mobile-search-bar.expanded .search-pill input{font-size:1rem;opacity:1;pointer-events:auto;transition:opacity 0.4s ease 0.2s,font-size 0.3s ease}
-
 @media(max-width:1024px){
 header{flex-direction:column;gap:12px;padding:14px 18px}
 .nav-center{width:100%;padding:0}
 .search-wrapper{max-width:100%}
 nav{flex-wrap:wrap;justify-content:center}
 }
-
 @media(max-width:768px){
 .hero h1{font-size:2.2rem}
 .section-title{font-size:1.6rem;margin:60px 0 30px}
@@ -162,13 +157,10 @@ nav a{padding:10px 14px;font-size:.8rem}
 .card{padding:18px}
 .modal{max-height:90vh}
 .grid{grid-template-columns:repeat(2,1fr);gap:12px}
-/* Hide header search, show mobile search bar */
 .nav-center{display:none}
 .mobile-search-bar{display:block}
-/* Adjust body padding for bottom bar */
 body{padding-bottom:80px}
 }
-
 @media(max-width:640px){
 header{padding:12px 14px;gap:10px;border-radius:var(--radius)}
 .logo{font-size:1.4rem}
@@ -189,7 +181,6 @@ nav a svg{width:14px;height:14px}
 .price-badge{padding:10px 12px;font-size:1rem}
 .buy-btn{padding:10px;font-size:.85rem}
 }
-
 @media(max-width:480px){
 .container{padding:10px}
 header{margin-bottom:20px}
@@ -283,8 +274,6 @@ footer{padding:40px 16px}
 <p>© 2024-2026 Shift Market</p>
 </footer>
 </div>
-
-<!-- Mobile bottom search bar -->
 <div class="mobile-search-bar" id="mobileSearchBar">
 <div class="search-pill" id="searchPill">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -292,7 +281,6 @@ footer{padding:40px 16px}
 <input type="text" id="mobileSearchInput" placeholder="Турция, авторег, +90...">
 </div>
 </div>
-
 <div class="modal-overlay" id="modalOverlay">
 <div class="modal">
 <div class="modal-header"><h3 id="modalTitle">Документ</h3><button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg></button></div>
@@ -318,8 +306,6 @@ c.innerHTML=`<div class="card-img"><img src="${p.image}" alt="${p.country}" drag
 grid.appendChild(c);
 });
 }
-
-// Sync both search inputs
 searchInput.addEventListener('input',e=>{
 renderProducts(e.target.value);
 mobileSearchInput.value=e.target.value;
@@ -328,13 +314,10 @@ mobileSearchInput.addEventListener('input',e=>{
 renderProducts(e.target.value);
 searchInput.value=e.target.value;
 });
-
-// Header hide/show on scroll (mobile only)
 let lastScrollY=0;
 let ticking=false;
 const header=document.getElementById('mainHeader');
 const mobileSearchBar=document.getElementById('mobileSearchBar');
-
 function updateHeaderVisibility(){
 const isMobile=window.innerWidth<=768;
 if(!isMobile){
@@ -344,28 +327,22 @@ return;
 }
 const currentScrollY=window.scrollY;
 if(currentScrollY>lastScrollY&&currentScrollY>100){
-// Scrolling down
 header.classList.add('hidden');
 mobileSearchBar.classList.add('visible');
 }else{
-// Scrolling up
 header.classList.remove('hidden');
 mobileSearchBar.classList.remove('visible');
 }
 lastScrollY=currentScrollY;
 ticking=false;
 }
-
 window.addEventListener('scroll',()=>{
 if(!ticking){
 window.requestAnimationFrame(updateHeaderVisibility);
 ticking=true;
 }
 },{passive:true});
-
 window.addEventListener('resize',updateHeaderVisibility);
-
-// Mobile search expand/collapse
 const searchPill = document.getElementById('searchPill');
 searchPill.addEventListener('click',()=>{
 mobileSearchBar.classList.add('expanded');
@@ -381,8 +358,6 @@ if(!mobileSearchBar.contains(e.target) && !mobileSearchInput.value){
 mobileSearchBar.classList.remove('expanded');
 }
 });
-
-
 const docs={privacy:`<h4>1. Общие положения</h4><p>1.1. Настоящая Политика конфиденциальности разработана в соответствии с требованиями Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных сервисом <b>Shift Market</b>.</p><p>1.2. <b>Используя Сервис, Пользователь выражает безоговорочное согласие с настоящей Политикой.</b></p><h4>2. Состав персональных данных</h4><ul><li>Имя пользователя в Telegram</li><li>Идентификатор пользователя</li><li>Сведения о транзакциях</li><li>Техническая информация (IP-адрес, браузер)</li></ul><h4>3. Цели обработки</h4><p>Данные обрабатываются для: идентификации, оказания услуг, связи с пользователем, улучшения сервиса.</p><h4>4. Конфиденциальность</h4><blockquote><b>ВАЖНО:</b> Оператор гарантирует полную конфиденциальность. Персональные данные <b>НЕ ПЕРЕДАЮТСЯ</b> третьим лицам ни при каких обстоятельствах.</blockquote><p>Мы <b>не передаём</b> данные:</p><ul><li>Государственным органам</li><li>Правоохранительным органам</li><li>Коммерческим организациям</li><li>Физическим лицам</li></ul><p><i>Исключение — только по решению суда РФ.</i></p><h4>5. Защита данных</h4><p>Применяются технические и организационные меры защиты от несанкционированного доступа.</p><h4>6. Права пользователя</h4><p>Пользователь вправе: получать информацию об обработке данных, требовать уточнения или удаления данных, отозвать согласие.</p><h4>7. Изменения</h4><p>Оператор вправе изменять Политику без уведомления. Актуальная версия всегда на сайте.</p>`,terms:`<h4>1. Принятие условий</h4><p>Используя сервис <b>Shift Market</b>, вы подтверждаете согласие с настоящими Условиями использования.</p><h4>2. Описание услуг</h4><p>Сервис предоставляет услуги по передаче прав доступа к аккаунтам Telegram. Все товары предоставляются <i>«как есть»</i>.</p><h4>3. Возрастные ограничения</h4><blockquote><b>ВНИМАНИЕ:</b> Использование Сервиса разрешено только лицам <b>18+</b>.</blockquote><h4>4. Обязанности пользователя</h4><ul><li>Использовать аккаунты в соответствии с правилами Telegram</li><li>Не использовать для противоправной деятельности</li><li>Самостоятельно нести ответственность за свои действия</li></ul><p><b>Любые противоправные действия — исключительная ответственность покупателя.</b></p><h4>5. Оплата</h4><p>Оплата по реквизитам менеджера. После передачи аккаунта сделка завершена.</p><h4>6. Возврат</h4><p><b>Возврат средств не производится</b> после передачи товара (ст. 26.1 Закона «О защите прав потребителей»).</p><h4>7. Ответственность</h4><p>Сервис <b>не несёт ответственности</b> за: блокировку аккаунта, утерю доступа, действия пользователя, убытки любого характера.</p>`,agreement:`<h4>1. Предмет соглашения</h4><p>Настоящее Соглашение является публичной офертой (ст. 437 ГК РФ) и определяет условия использования <b>Shift Market</b>.</p><p>Предмет: возмездное оказание услуг по передаче прав доступа к аккаунтам Telegram.</p><h4>2. Порядок покупки</h4><ol><li><b>Заявка</b> — обращение к менеджеру</li><li><b>Подтверждение</b> — уточнение наличия и цены</li><li><b>Оплата</b> — по предоставленным реквизитам</li><li><b>Передача</b> — получение данных для входа</li></ol><h4>3. Гарантии</h4><blockquote><b>КРИТИЧЕСКИ ВАЖНО:</b> Гарантия работоспособности — только на момент передачи. После передачи все риски переходят к покупателю.</blockquote><p>Исполнитель <b>НЕ гарантирует</b>: бессрочную работу, отсутствие блокировок, пригодность для целей покупателя.</p><h4>4. Переход ответственности</h4><p><b>С момента передачи товара:</b></p><ul><li>Вся ответственность переходит к покупателю</li><li>Покупатель отвечает за все действия с аккаунтом</li><li>Исполнитель освобождается от ответственности</li></ul><p><i>Противоправное использование влечёт уголовную, административную и гражданскую ответственность покупателя.</i></p><h4>5. Замена</h4><p>Замена только при: неработоспособности на момент передачи + видеодоказательство + претензия в течение 10 минут.</p><h4>6. Реферальная программа</h4><ul><li>Скидка другу — 8%</li><li>Ваш доход — 10%</li></ul><h4>7. Конфиденциальность</h4><p>Данные <b>не передаются</b> третьим лицам.</p>`,disclaimer:`<h4>Полный отказ от ответственности</h4><blockquote><b>КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ:</b> Приобретая товар, вы принимаете ВСЕ риски и освобождаете Сервис от ЛЮБОЙ ответственности.</blockquote><h4>1. Природа товара</h4><p>Товары предоставляются <b>«как есть»</b> без каких-либо гарантий.</p><h4>2. Переход ответственности</h4><p><b>С момента передачи товара покупателю:</b></p><ul><li>Вся ответственность за использование — на покупателе</li><li>Сервис не контролирует действия после передачи</li><li>Покупатель отвечает за соблюдение законодательства</li></ul><h4>3. Освобождение от ответственности</h4><p>Сервис <b>полностью освобождается</b> от ответственности за:</p><ul><li>Блокировку/ограничение аккаунта</li><li>Утерю доступа</li><li>Прямые и косвенные убытки</li><li>Упущенную выгоду</li><li>Моральный вред</li><li>Противоправные действия покупателя (мошенничество, спам, нарушение прав)</li><li>Действия третьих лиц</li></ul><h4>4. Противоправные действия</h4><blockquote>Сервис <b>НЕ НЕСЁТ ОТВЕТСТВЕННОСТИ</b> за противоправные действия покупателя, даже если покупатель является мошенником. Вся ответственность (уголовная, административная, гражданская) — исключительно на покупателе.</blockquote><h4>5. Конфиденциальность</h4><p>Данные пользователей <b>НЕ ПЕРЕДАЮТСЯ НИКОМУ</b>:</p><ul><li>Ни государственным органам</li><li>Ни правоохранительным органам</li><li>Ни коммерческим организациям</li><li>Ни физическим лицам</li></ul><p><i>Исключение — только по решению суда РФ.</i></p><h4>6. Подтверждение</h4><p><code>Используя Сервис, вы подтверждаете полное согласие с данным отказом и действуете на свой страх и риск.</code></p>`};
 
 function openModal(t){
@@ -392,17 +367,13 @@ document.getElementById('modalBody').innerHTML=docs[t];
 o.classList.add('active');
 document.body.style.overflow='hidden';
 }
-
 function closeModal(){
 document.getElementById('modalOverlay').classList.remove('active');
 document.body.style.overflow='';
 }
-
 document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');observer.unobserve(e.target)}})},{threshold:0.1});
-
 document.addEventListener('DOMContentLoaded',()=>{
 renderProducts();
 document.querySelectorAll('.scroll-reveal').forEach(el=>observer.observe(el));
