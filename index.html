@@ -110,8 +110,8 @@
         .search-widget:focus-within .search-icon { color: var(--accent); transform: scale(1.1); }
 
         @media(max-width: 600px) {
-            .search-widget { bottom: 20px; width: calc(100% - 40px); }
-            .search-widget:focus-within { width: calc(100% - 24px); }
+            .search-widget { bottom: 20px; width: 200px; }
+            .search-widget:focus-within { width: calc(100% - 32px); }
         }
 
         .hero { text-align: center; padding: 40px 20px 100px; animation: fadeUp 1.2s var(--transition) .2s both; }
@@ -173,20 +173,22 @@
         .buy-btn:hover { background: var(--accent); transform: scale(1.02); box-shadow: 0 10px 30px var(--accent-glow); }
         .buy-btn:active { transform: scale(0.98); }
         
-        .section-title { font-size: 2.4rem; font-weight: 900; margin: 80px 0 40px; letter-spacing: -1.5px; display: flex; align-items: center; gap: 16px; }
-        .section-title svg { width: 32px; height: 32px; color: var(--accent); flex-shrink: 0; }
-        .content-block { background: var(--bg-card); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 28px; padding: 40px; margin-bottom: 24px; position: relative; overflow: hidden; }
+        .section-title { font-size: 2.2rem; font-weight: 900; margin: 60px 0 30px; letter-spacing: -1.5px; display: flex; align-items: center; gap: 16px; }
+        .section-title svg { width: 28px; height: 28px; color: var(--accent); flex-shrink: 0; }
+        .content-block { background: var(--bg-card); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 24px; padding: 32px; margin-bottom: 20px; position: relative; overflow: hidden; }
         
-        .guide-step { margin-bottom: 28px; padding-left: 36px; position: relative; }
-        .guide-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 20px var(--accent-glow); }
+        .guide-step { margin-bottom: 20px; padding-left: 32px; position: relative; }
+        .guide-step h4 { font-size: 1.1rem; margin-bottom: 4px; }
+        .guide-step p { font-size: 0.95rem; opacity: 0.8; }
+        .guide-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
         
-        details { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 18px; background: rgba(255,255,255,0.01); transition: var(--transition); overflow: hidden; }
+        details { margin-bottom: 10px; border: 1px solid var(--border); border-radius: 16px; background: rgba(255,255,255,0.01); transition: var(--transition); overflow: hidden; }
         details[open] { border-color: rgba(204, 255, 0, 0.2); background: rgba(204, 255, 0, 0.02); }
-        summary { font-weight: 700; cursor: pointer; padding: 22px 26px; display: flex; justify-content: space-between; align-items: center; list-style: none; transition: var(--transition); }
+        summary { font-weight: 700; cursor: pointer; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; list-style: none; transition: var(--transition); font-size: 0.95rem; }
         summary::-webkit-details-marker { display: none; }
-        summary::after { content: ''; width: 8px; height: 8px; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(45deg); transition: var(--transition); margin-right: 4px; }
-        details[open] summary::after { transform: rotate(-135deg); margin-top: 6px; }
-        details > div { padding: 0 26px 26px; color: var(--text-secondary); line-height: 1.6; font-size: 1rem; }
+        summary::after { content: ''; width: 6px; height: 6px; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(45deg); transition: var(--transition); margin-right: 4px; }
+        details[open] summary::after { transform: rotate(-135deg); margin-top: 4px; }
+        details > div { padding: 0 22px 20px; color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
         
         footer { text-align: center; padding: 80px 20px 140px; border-top: 1px solid var(--border); margin-top: 100px; }
         .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 30px; }
@@ -236,6 +238,9 @@
             .section-title { font-size: 1.5rem; margin: 30px 0 20px; }
             .section-title svg { width: 22px; height: 22px; }
             .section-separator { margin: 30px 0 15px; font-size: 0.8rem; }
+            
+            .footer-links { gap: 12px; }
+            .footer-links a { font-size: 0.75rem; }
         }
 
         @media(max-width: 400px) {
@@ -246,6 +251,8 @@
             nav a svg { width: 18px; height: 18px; }
             .hero h1 { font-size: 2.2rem; }
             .grid { gap: 8px; }
+            .footer-links { gap: 8px; }
+            .footer-links a { font-size: 0.65rem; }
         }
     </style>
 </head>
