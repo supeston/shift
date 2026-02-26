@@ -29,9 +29,10 @@
             --transition-bounce: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         ::selection { background: var(--accent); color: #000; }
-        html { scroll-behavior: auto; }
+        html { scroll-behavior: auto; } /* Lenis handles smoothing */
         body { background: var(--bg); color: var(--text); font-family: Inter, sans-serif; overflow-x: hidden; min-height: 100vh; line-height: 1.6; }
         
+        /* Hide scrollbar for iOS aesthetic */
         ::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -77,7 +78,7 @@
         /* Floating Search Widget */
         .search-widget {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            z-index: 9999; width: 280px; height: 56px;
+            z-index: 9999; width: 320px; height: 56px;
             transition: var(--transition-bounce);
         }
         .search-glass {
@@ -92,7 +93,7 @@
             transition: var(--transition-bounce);
         }
         .search-widget:focus-within {
-            width: 500px;
+            width: min(600px, 94%);
             transform: translateX(-50%) scale(1.02);
         }
         .search-widget:focus-within .search-glass {
@@ -102,15 +103,15 @@
         }
         .search-input {
             flex: 1; background: transparent; border: none; outline: none;
-            color: #fff; font-size: 1rem; font-weight: 500;
+            color: #fff; font-size: 1rem; font-weight: 500; width: 100%;
         }
         .search-input::placeholder { color: var(--text-muted); }
         .search-icon { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; transition: var(--transition); }
         .search-widget:focus-within .search-icon { color: var(--accent); transform: scale(1.1); }
 
         @media(max-width: 600px) {
-            .search-widget { bottom: 20px; width: 90%; }
-            .search-widget:focus-within { width: 94%; }
+            .search-widget { bottom: 20px; width: calc(100% - 40px); }
+            .search-widget:focus-within { width: calc(100% - 24px); }
         }
 
         .hero { text-align: center; padding: 40px 20px 100px; animation: fadeUp 1.2s var(--transition) .2s both; }
@@ -131,43 +132,43 @@
         @keyframes pulse { 0%, 100% { box-shadow: 0 0 20px rgba(204, 255, 0, 0.1); border-color: rgba(204, 255, 0, 0.1); } 50% { box-shadow: 0 0 40px rgba(204, 255, 0, 0.3); border-color: var(--accent); } }
 
         .section-separator {
-            grid-column: 1 / -1; display: flex; align-items: center; gap: 24px; margin: 60px 0 30px; font-size: 1.1rem;
-            font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px;
+            grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; margin: 40px 0 20px; font-size: 0.9rem;
+            font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;
         }
         .section-separator::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 20px 0 100px; }
-        @media(max-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; padding: 20px 0 80px; }
+        @media(max-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
         
         .card { 
             position: relative; background: var(--bg-card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: var(--radius-lg); 
-            padding: 30px; transition: var(--transition); display: flex; flex-direction: column; align-items: center; 
+            border: 1px solid var(--border); border-radius: 24px; 
+            padding: 24px; transition: var(--transition); display: flex; flex-direction: column; align-items: center; 
             text-align: center; overflow: hidden; 
         }
-        .card:hover { transform: translateY(-12px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(204, 255, 0, 0.1); }
+        .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(204, 255, 0, 0.1); }
         
-        .card-img { width: 120px; height: 120px; margin-bottom: 20px; border-radius: 28px; overflow: hidden; position: relative; z-index: 1; transform: rotate(-2deg); transition: var(--transition); }
+        .card-img { width: 100px; height: 100px; margin-bottom: 12px; border-radius: 20px; overflow: hidden; position: relative; z-index: 1; transform: rotate(-1deg); transition: var(--transition); }
         .card:hover .card-img { transform: rotate(0) scale(1.05); }
         .card-img img { width: 100%; height: 100%; object-fit: cover; }
         
-        .card-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
+        .card-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
         
         .info-box { 
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; 
-            width: 100%; margin-bottom: 10px; font-size: .85rem; color: var(--text-secondary); 
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; 
+            width: 100%; margin-bottom: 8px; font-size: 1.05rem; color: var(--text-secondary); 
         }
-        .info-box.type { border-left: 3px solid var(--accent); font-weight: 600; color: #fff; }
-        .info-box.discount { border-color: var(--accent); color: var(--accent); font-weight: 800; background: rgba(204, 255, 0, 0.05); }
+        .info-box.type { border-left: 3px solid var(--accent); font-weight: 700; color: #fff; font-size: 1.1rem; }
+        .info-box.discount { border-color: var(--accent); color: var(--accent); font-weight: 800; background: rgba(204, 255, 0, 0.05); font-size: 0.9rem; }
         
         .price-badge { 
-            color: var(--accent); padding: 16px; font-weight: 900; font-size: 1.8rem; margin: 10px 0; width: 100%; letter-spacing: -1px;
+            color: var(--accent); padding: 12px; font-weight: 900; font-size: 1.6rem; margin: 4px 0; width: 100%; letter-spacing: -1px;
         }
         
         .buy-btn { 
-            width: 100%; padding: 18px; border-radius: var(--radius); border: 1px solid var(--border); 
-            background: #fff; color: #000; font-weight: 800; font-size: 1rem; cursor: pointer; 
-            transition: var(--transition); position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 10px; 
+            width: 100%; padding: 16px; border-radius: 16px; border: 1px solid var(--border); 
+            background: #fff; color: #000; font-weight: 800; font-size: 0.95rem; cursor: pointer; 
+            transition: var(--transition); position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 8px; 
         }
         .buy-btn:hover { background: var(--accent); transform: scale(1.02); box-shadow: 0 10px 30px var(--accent-glow); }
         .buy-btn:active { transform: scale(0.98); }
@@ -212,10 +213,39 @@
         .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
 
         @media(max-width: 768px) {
-            header { margin-bottom: 40px; top: 10px; }
-            .hero h1 { font-size: 3.5rem; letter-spacing: -2px; }
-            .content-block { padding: 30px; }
-            .section-title { font-size: 2rem; }
+            header { padding: 10px 16px; margin-bottom: 24px; top: 10px; border-radius: 20px; }
+            .logo { font-size: 1.1rem; letter-spacing: -0.8px; }
+            nav { gap: 4px; }
+            nav a { padding: 8px 10px; font-size: 0.7rem; gap: 4px; }
+            nav a svg { width: 14px; height: 14px; }
+            
+            .hero { padding: 10px 10px 40px; }
+            .hero h1 { font-size: 2.8rem; letter-spacing: -1.2px; margin-bottom: 12px; }
+            .hero-sub { font-size: 0.95rem; margin-bottom: 20px; }
+            .hero-badge { padding: 6px 14px; font-size: 0.6rem; }
+
+            .card { padding: 14px; border-radius: 18px; }
+            .card-img { width: 70px; height: 70px; border-radius: 14px; margin-bottom: 8px; }
+            .card-title { font-size: 1rem; margin-bottom: 6px; }
+            .info-box { padding: 6px 8px; font-size: 0.85rem; margin-bottom: 4px; border-radius: 6px; }
+            .info-box.type { font-size: 0.9rem; }
+            .price-badge { font-size: 1.2rem; padding: 4px; margin: 2px 0; }
+            .buy-btn { padding: 10px; font-size: 0.8rem; border-radius: 10px; gap: 6px; }
+
+            .content-block { padding: 20px; border-radius: 20px; }
+            .section-title { font-size: 1.5rem; margin: 30px 0 20px; }
+            .section-title svg { width: 22px; height: 22px; }
+            .section-separator { margin: 30px 0 15px; font-size: 0.8rem; }
+        }
+
+        @media(max-width: 400px) {
+            header { padding: 8px 12px; }
+            .logo { font-size: 0.95rem; }
+            nav a span { display: none; }
+            nav a { padding: 8px; }
+            nav a svg { width: 18px; height: 18px; }
+            .hero h1 { font-size: 2.2rem; }
+            .grid { gap: 8px; }
         }
     </style>
 </head>
@@ -302,6 +332,7 @@
         </footer>
     </div>
 
+    <!-- Floating Search Widget -->
     <div class="search-widget" id="searchWidget">
         <div class="search-glass">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -320,6 +351,7 @@
     </div>
 
     <script>
+        // Security
         (function(){
             document.addEventListener('contextmenu',e=>e.preventDefault());
             document.addEventListener('keydown',e=>{
