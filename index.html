@@ -29,10 +29,9 @@
             --transition-bounce: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         ::selection { background: var(--accent); color: #000; }
-        html { scroll-behavior: auto; } /* Lenis handles smoothing */
+        html { scroll-behavior: auto; }
         body { background: var(--bg); color: var(--text); font-family: Inter, sans-serif; overflow-x: hidden; min-height: 100vh; line-height: 1.6; }
         
-        /* Hide scrollbar for iOS aesthetic */
         ::-webkit-scrollbar { display: none; }
         body { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -75,7 +74,6 @@
         nav a.active { color: #000; background: var(--accent); border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
         nav a svg { width: 18px; height: 18px; }
 
-        /* Floating Search Widget */
         .search-widget {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             z-index: 9999; width: 320px; height: 56px;
@@ -322,7 +320,7 @@
             </h2>
 
             <div class="scroll-reveal content-block">
-                <details><summary>Аккаунты Самиреги — что это?</summary><div>Аккаунты, зарегистрированные вручную. Мы гарантируем их чистоту и "отлежку".</div></details>
+                <details><summary>Аккаунты Самореги — что это?</summary><div>Аккаунты, зарегистрированные вручную. Мы гарантируем их чистоту и "отлежку".</div></details>
                 <details><summary>Как быстро приходят звезды?</summary><div>В среднем процесс занимает от 2 до 10 минут после оплаты менеджером.</div></details>
                 <details><summary>Есть ли оптовые скидки?</summary><div>Да, при покупке от 10 аккаунтов или 5000 звезд условия обсуждаются индивидуально.</div></details>
             </div>
