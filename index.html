@@ -1,0 +1,1013 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1,user-scalable=no" name="viewport">
+    <title>Shift Market | Accounts & Stars</title>
+    <meta content="Shift Market — Accounts and Telegram Stars with instant delivery." name="description">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <style>
+        *, ::after, ::before { box-sizing: border-box; margin: 0; padding: 0; -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+        :root {
+            --bg: #121214; 
+            --bg-elevated: #1c1c1e; 
+            --bg-card: rgba(28, 28, 30, 0.7);
+            --border: rgba(255, 255, 255, 0.05); 
+            --border-hover: rgba(204, 255, 0, 0.3);
+            --text: #ffffff; 
+            --text-secondary: rgba(255, 255, 255, 0.6); 
+            --text-muted: rgba(255, 255, 255, 0.3);
+            --accent: #ccff00; 
+            --accent-glow: rgba(204, 255, 0, 0.4);
+            --gradient: linear-gradient(135deg, #ccff00 0%, #aadd00 100%);
+            --radius: 20px; 
+            --radius-lg: 32px;
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-bounce: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        ::selection { background: var(--accent); color: #000; }
+        html { scroll-behavior: auto; }
+        body { background: var(--bg); color: var(--text); font-family: Inter, sans-serif; overflow-x: hidden; min-height: 100vh; line-height: 1.6; }
+        
+        ::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+
+        img { pointer-events: none; -webkit-user-drag: none; }
+        
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .glow-orb { position: absolute; border-radius: 50%; filter: blur(140px); opacity: .12; animation: float 30s ease-in-out infinite; }
+        .glow-orb-1 { width: 900px; height: 900px; background: radial-gradient(circle, #ccff00 0, transparent 70%); top: -400px; left: -300px; }
+        .glow-orb-2 { width: 700px; height: 700px; background: radial-gradient(circle, #1a4d1a 0, transparent 70%); bottom: -200px; right: -100px; animation-delay: -12s; }
+        .glow-orb-3 { width: 600px; height: 600px; background: radial-gradient(circle, #39ff14 0, transparent 70%); top: 30%; left: 40%; animation-delay: -7s; }
+        @keyframes float { 
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            33% { transform: translate(100px, -120px) scale(1.1) rotate(10deg); }
+            66% { transform: translate(-80px, 80px) scale(.9) rotate(-10deg); }
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+        
+        header { 
+            position: sticky; top: 20px; z-index: 1000; display: flex; justify-content: space-between; align-items: center; 
+            padding: 16px 32px; margin-bottom: 60px; background: rgba(18, 18, 20, 0.6); backdrop-filter: blur(30px); 
+            border: 1px solid var(--border); border-radius: var(--radius-lg); animation: slideDown 1s var(--transition); 
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+
+        .logo { 
+            font-size: 1.6rem; font-weight: 900; letter-spacing: -1.2px; 
+            background: linear-gradient(135deg, #fff 0, #aaa 100%); 
+            -webkit-background-clip: text; background-clip: text; 
+            -webkit-text-fill-color: transparent; text-transform: uppercase; 
+        }
+        
+        nav { display: flex; gap: 12px; }
+        nav a { 
+            color: var(--text-secondary); text-decoration: none; padding: 12px 22px; border-radius: 50px; 
+            font-weight: 600; font-size: .85rem; transition: var(--transition); border: 1px solid transparent; 
+            display: flex; align-items: center; gap: 8px; 
+        }
+        nav a:hover { color: var(--accent); background: rgba(204, 255, 0, 0.05); border-color: rgba(204, 255, 0, 0.1); }
+        nav a.active { color: #000; background: var(--accent); border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
+        nav a svg { width: 18px; height: 18px; }
+
+        .search-widget {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 9999; width: 320px; height: 56px;
+            transition: var(--transition-bounce);
+        }
+        .search-glass {
+            width: 100%; height: 100%;
+            background: rgba(28, 28, 30, 0.6);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0 20px;
+            display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transition: var(--transition-bounce);
+        }
+        .search-widget:focus-within {
+            width: min(600px, 94%);
+            transform: translateX(-50%) scale(1.02);
+        }
+        .search-widget:focus-within .search-glass {
+            background: rgba(44, 44, 46, 0.8);
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(204, 255, 0, 0.15);
+        }
+        .search-input {
+            flex: 1; background: transparent; border: none; outline: none;
+            color: #fff; font-size: 1rem; font-weight: 500; width: 100%;
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-icon { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; transition: var(--transition); }
+        .search-widget:focus-within .search-icon { color: var(--accent); transform: scale(1.1); }
+
+        @media(max-width: 600px) {
+            .search-widget { bottom: 20px; width: 200px; }
+            .search-widget:focus-within { width: calc(100% - 32px); }
+        }
+
+        .hero { text-align: center; padding: 40px 20px 100px; animation: fadeUp 1.2s var(--transition) .2s both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hero h1 { 
+            font-size: clamp(3rem, 10vw, 6.5rem); font-weight: 900; line-height: 0.82; margin-bottom: 24px; letter-spacing: -3.5px;
+            background: linear-gradient(180deg, #fff 0, #666 100%); 
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; 
+        }
+        .hero-sub { font-size: 1.25rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 40px; font-weight: 400; opacity: 0.8; }
+        .hero-badge { 
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: rgba(204, 255, 0, 0.04); 
+            border: 1px solid rgba(204, 255, 0, 0.1); border-radius: 50px; font-size: .8rem; font-weight: 700; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 20px rgba(204, 255, 0, 0.1); border-color: rgba(204, 255, 0, 0.1); } 50% { box-shadow: 0 0 40px rgba(204, 255, 0, 0.3); border-color: var(--accent); } }
+
+        .grid { padding: 20px 0 80px; }
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 24px;
+        }
+        .cards-container .card {
+            flex: 1 1 250px;
+            max-width: calc(25% - 18px);
+        }
+        @media(max-width: 1024px) {
+            .cards-container .card { max-width: calc(33.333% - 16px); }
+        }
+        @media(max-width: 768px) {
+            .cards-container .card { max-width: calc(50% - 12px); }
+        }
+        @media(max-width: 640px) { 
+            .grid { padding: 10px 0 40px; }
+            .cards-container { gap: 10px; }
+            .cards-container .card { max-width: calc(50% - 5px); }
+        }
+        
+        .card { 
+            position: relative; background: var(--bg-card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 24px; 
+            padding: 24px; transition: var(--transition); display: flex; flex-direction: column; align-items: center; 
+            text-align: center; overflow: hidden; 
+        }
+        .card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(204, 255, 0, 0.1); }
+        
+        .card-img { width: 100px; height: 100px; margin-bottom: 12px; border-radius: 20px; overflow: hidden; position: relative; z-index: 1; transform: rotate(-1deg); transition: var(--transition); }
+        .card:hover .card-img { transform: rotate(0) scale(1.05); }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .card-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+        
+        .info-box { 
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; 
+            width: 100%; margin-bottom: 8px; font-size: 1.05rem; color: var(--text-secondary); 
+        }
+        .info-box.type { border-left: 3px solid var(--accent); font-weight: 700; color: #fff; font-size: 1.1rem; }
+        .info-box.discount { border-color: var(--accent); color: var(--accent); font-weight: 800; background: rgba(204, 255, 0, 0.05); font-size: 0.9rem; }
+        
+        .price-badge { 
+            color: var(--accent); padding: 12px; font-weight: 900; font-size: 1.6rem; margin: 4px 0; width: 100%; letter-spacing: -1px;
+        }
+        
+        .buy-btn { 
+            width: 100%; padding: 16px; border-radius: 16px; border: 1px solid var(--border); 
+            background: #fff; color: #000; font-weight: 800; font-size: 0.95rem; cursor: pointer; 
+            transition: var(--transition); position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 8px; 
+        }
+        .buy-btn:hover { background: var(--accent); transform: scale(1.02); box-shadow: 0 10px 30px var(--accent-glow); }
+        .buy-btn:active { transform: scale(0.98); }
+        
+        .section-title { font-size: 2.2rem; font-weight: 900; margin: 60px 0 30px; letter-spacing: -1.5px; display: flex; align-items: center; gap: 16px; }
+        .section-title svg { width: 28px; height: 28px; color: var(--accent); flex-shrink: 0; }
+        .content-block { background: var(--bg-card); backdrop-filter: blur(25px); border: 1px solid var(--border); border-radius: 24px; padding: 32px; margin-bottom: 20px; position: relative; overflow: hidden; }
+        
+        .guide-step { margin-bottom: 20px; padding-left: 32px; position: relative; }
+        .guide-step h4 { font-size: 1.1rem; margin-bottom: 4px; }
+        .guide-step p { font-size: 0.95rem; opacity: 0.8; }
+        .guide-step::before { content: ''; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 15px var(--accent-glow); }
+        
+        details { margin-bottom: 10px; border: 1px solid var(--border); border-radius: 16px; background: rgba(255,255,255,0.01); transition: var(--transition); overflow: hidden; }
+        details[open] { border-color: rgba(204, 255, 0, 0.2); background: rgba(204, 255, 0, 0.02); }
+        summary { font-weight: 700; cursor: pointer; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; list-style: none; transition: var(--transition); font-size: 0.95rem; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: ''; width: 6px; height: 6px; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(45deg); transition: var(--transition); margin-right: 4px; }
+        details[open] summary::after { transform: rotate(-135deg); margin-top: 4px; }
+        details > div { padding: 0 22px 20px; color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        
+        footer { text-align: center; padding: 80px 20px 140px; border-top: 1px solid var(--border); margin-top: 100px; }
+        .footer-links { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-bottom: 30px; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: .95rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
+        .footer-links a:hover { color: var(--accent); }
+        
+        .modal-overlay { 
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(40px); z-index: 99999; 
+            opacity: 0; visibility: hidden; transition: var(--transition); display: flex; align-items: center; justify-content: center; padding: 20px; 
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal { 
+            background: #1c1c1e; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); 
+            max-width: 800px; width: 100%; max-height: 85vh; transform: scale(.9); transition: var(--transition-bounce); display: flex; flex-direction: column; 
+        }
+        .modal-overlay.active .modal { transform: scale(1); }
+        .modal-header { padding: 32px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .modal-close { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05); color: #fff; border: none; cursor: pointer; transition: var(--transition); }
+        .modal-close:hover { background: var(--accent); color: #000; }
+        .modal-body { padding: 40px; overflow-y: auto; color: var(--text-secondary); font-size: 1.1rem; }
+        .modal-body h4 { color: #fff; font-size: 1.5rem; margin: 30px 0 15px; }
+
+        .scroll-reveal { opacity: 0; transform: translateY(40px); transition: all 1s var(--transition); }
+        .scroll-reveal.revealed { opacity: 1; transform: translateY(0); }
+
+        @media(max-width: 768px) {
+            header { padding: 10px 16px; margin-bottom: 24px; top: 10px; border-radius: 20px; }
+            .logo { font-size: 1.1rem; letter-spacing: -0.8px; }
+            nav { gap: 4px; }
+            nav a { padding: 8px 10px; font-size: 0.7rem; gap: 4px; }
+            nav a svg { width: 14px; height: 14px; }
+            
+            .hero { padding: 10px 10px 40px; }
+            .hero h1 { font-size: 2.8rem; letter-spacing: -1.2px; margin-bottom: 12px; }
+            .hero-sub { font-size: 0.95rem; margin-bottom: 20px; }
+            .hero-badge { padding: 6px 14px; font-size: 0.6rem; }
+
+            .card { padding: 14px; border-radius: 18px; }
+            .card-img { width: 70px; height: 70px; border-radius: 14px; margin-bottom: 8px; }
+            .card-title { font-size: 1rem; margin-bottom: 6px; }
+            .info-box { padding: 6px 8px; font-size: 0.85rem; margin-bottom: 4px; border-radius: 6px; }
+            .info-box.type { font-size: 0.9rem; }
+            .price-badge { font-size: 1.2rem; padding: 4px; margin: 2px 0; }
+            .buy-btn { padding: 10px; font-size: 0.8rem; border-radius: 10px; gap: 6px; }
+
+            .content-block { padding: 20px; border-radius: 20px; }
+            .section-title { font-size: 1.5rem; margin: 30px 0 20px; }
+            .section-title svg { width: 22px; height: 22px; }
+            .section-separator { margin: 30px 0 15px; font-size: 0.8rem; }
+            
+            .footer-links { gap: 12px; }
+            .footer-links a { font-size: 0.75rem; }
+        }
+
+        @media(max-width: 400px) {
+            header { padding: 8px 12px; }
+            .logo { font-size: 0.95rem; }
+            nav a span { display: none; }
+            nav a { padding: 8px; }
+            nav a svg { width: 18px; height: 18px; }
+            .hero h1 { font-size: 2.2rem; }
+            .grid { gap: 8px; }
+            .footer-links { gap: 8px; }
+            .footer-links a { font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow">
+        <div class="glow-orb glow-orb-1"></div>
+        <div class="glow-orb glow-orb-2"></div>
+        <div class="glow-orb glow-orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">Shift Market</div>
+            <nav>
+                <a href="#catalog">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect height="7" width="7" x="3" y="3"/><rect height="7" width="7" x="14" y="3"/><rect height="7" width="7" x="14" y="14"/><rect height="7" width="7" x="3" y="14"/></svg>
+                    <span>Каталог</span>
+                </a>
+                <a href="#guide">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    <span>Гайд</span>
+                </a>
+                <a href="#faq">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg>
+                    <span>FAQ</span>
+                </a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-badge">Active 24/7 Monitoring</div>
+            <h1>Accounts & Stars</h1>
+            <p class="hero-sub">Лучшие условия на Telegram аккаунты и звезды. Твой вход в цифровую экономику начинается здесь.</p>
+        </section>
+
+        <main>
+            <div class="grid" id="catalog"></div>
+
+            <h2 class="scroll-reveal section-title" id="guide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Инструкции
+            </h2>
+            
+            <div class="scroll-reveal content-block">
+                <h3 style="margin-bottom: 30px; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+                    Покупка ТГ Аккаунтов
+                    <svg width="1.1em" height="1.1em" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="14" y="2" width="36" height="60" rx="5" fill="#1b1c1d"/>
+                        <rect x="16" y="4" width="32" height="56" rx="4" fill="#2c2d2e"/>
+                        <rect x="18" y="10" width="28" height="40" fill="#00aaff"/>
+                        <path d="M 18 20 H 46 M 18 30 H 46 M 18 40 H 46" stroke="#2c2d2e" stroke-width="2"/>
+                        <path d="M 27 10 V 40 M 37 10 V 40" stroke="#2c2d2e" stroke-width="2"/>
+                        <circle cx="32" cy="54" r="2.5" fill="#555"/>
+                    </svg>
+                </h3>
+                <div class="guide-step">
+                    <h4>Оформление заказа</h4>
+                    <p>Напишите нашему продавцу <b>@shiftsel</b> и укажите, какую страну вы хотите приобрести.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Оплата и получение</h4>
+                    <p>Произведите оплату удобным способом. После этого продавец оперативно передаст вам данные от аккаунта.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Безопасность профиля</h4>
+                    <p>Сразу после входа обязательно измените облачный пароль и привяжите свою личную электронную почту для входа.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Важно: Отлежка</h4>
+                    <p>Подождите ровно 24 часа и вообще не трогайте профиль. Дайте аккаунту «отлежаться» для максимальной безопасности.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Легитимность</h4>
+                    <p>Только спустя сутки можно постепенно начинать проявлять небольшую активность, чтобы ваш аккаунт прослужил как можно дольше.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>💡 Наш Совет (Прокси)</h4>
+                    <p>У нас можно купить прокси (под любую страну, на срок от 1 недели до 3 месяцев) за небольшую стоимость! Наличие прокси на конкретную страну уточняйте в ЛС <b>@shiftsel</b>.</p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal content-block">
+                <h3 style="margin-bottom: 30px; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+                    Покупка Обхода ТГ
+                    <svg width="1.1em" height="1.1em" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f5f5f7"/>
+                                <stop offset="50%" stop-color="#d1d1d6"/>
+                                <stop offset="100%" stop-color="#aeaeb2"/>
+                            </linearGradient>
+                            <linearGradient id="shieldRim" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#8e8e93"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M12 8 C12 8 32 4 32 4 C32 4 52 8 52 8 C52 32 46 50 32 60 C18 50 12 32 12 8 Z" fill="url(#shieldRim)"/>
+                        <path d="M15 11 C15 11 32 7.5 32 7.5 C32 7.5 49 11 49 11 C49 31 44 47 32 56 C20 47 15 31 15 11 Z" fill="url(#shieldGrad)"/>
+                        <path d="M32 7.5 V56 C20 47 15 31 15 11 C15 11 32 7.5 32 7.5 Z" fill="#ffffff" fill-opacity="0.3"/>
+                    </svg>
+                </h3>
+                <div class="guide-step">
+                    <h4>Оформление заказа</h4>
+                    <p>Напишите в ЛС продавцу (<b>@shiftsel</b>), что хотите купить «Обход ТГ», и уточните на какой срок вам нужна услуга.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Проведение оплаты</h4>
+                    <p>Обход оплачивается любым удобным способом: поддерживается СБП и DonationAlerts.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Установка и запуск</h4>
+                    <p>После оплаты мы отправим вам специальную ссылку. Нажмите на нее и выберите кнопку «Подключить».</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Готово!</h4>
+                    <p>Обход заработает мгновенно, и ваш Telegram снова начнет загружаться с прежней высокой скоростью без сбоев!</p>
+                </div>
+            </div>
+
+            <div class="scroll-reveal content-block">
+                <h3 style="margin-bottom: 30px; font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 10px;">
+                    Покупка Telegram Stars
+                    <svg width="1.1em" height="1.1em" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="starGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#fff88e"/>
+                                <stop offset="100%" stop-color="#f0b400"/>
+                            </linearGradient>
+                            <radialGradient id="starGlow" cx="50%" cy="40%" r="50%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#f5d600" stop-opacity="0"/>
+                            </radialGradient>
+                        </defs>
+                        <path d="M32 3.5l8.5 17.2 19 2.8-13.7 13.4 3.2 18.9-17-8.9-17 8.9 3.2-18.9-13.7-13.4 19-2.8z" fill="url(#starGrad)" stroke="#c38d00" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M32 6.5l7 14.5 16 2.4-11.5 11.2 2.7 16-14.2-7.5-14.2 7.5 2.7-16-11.5-11.2 16-2.4z" fill="url(#starGlow)" opacity="0.6"/>
+                    </svg>
+                </h3>
+                <div class="guide-step">
+                    <h4>Выбор объема</h4>
+                    <p>Выберите нужный пакет звезд и нажмите кнопку покупки.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Идентификация</h4>
+                    <p>Сообщите менеджеру ваш юзернейм в формате @username.</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Проведение оплаты</h4>
+                    <p>Оплатите удобным способом. Мы поддерживаем СБП и DonationAlerts</p>
+                </div>
+                <div class="guide-step">
+                    <h4>Готово!</h4>
+                    <p>Звезды зачисляются подарком мгновенно после подтверждения.</p>
+                </div>
+            </div>
+
+            <h2 class="scroll-reveal section-title" id="faq">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg>
+                Частые вопросы
+            </h2>
+
+            <div class="scroll-reveal content-block">
+                <details><summary>Аккаунты Самореги — что это?</summary><div>Аккаунты, зарегистрированные вручную. Мы гарантируем их чистоту и "отлежку".</div></details>
+                <details><summary>Как быстро приходят звезды?</summary><div>В среднем процесс занимает от 2 до 10 минут после оплаты менеджером.</div></details>
+                <details><summary>Есть ли оптовые скидки?</summary><div>Да, при покупке от 10 аккаунтов или 5000 звезд условия обсуждаются индивидуально.</div></details>
+
+                <details><summary>Что делать, если купленный аккаунт сразу заблокировали?</summary><div>Мы строго проверяем все профили перед выдачей. Если проблема возникла сразу при вашем первом входе, предоставьте видеодоказательство (с момента передачи до самого входа), и мы оперативно заменим аккаунт согласно нашим правилам.</div></details>
+                <details><summary>Нужно ли использовать прокси для входа в аккаунт?</summary><div>Да, мы настоятельно рекомендуем использовать прокси, соответствующий стране регистрации аккаунта. Это многократно снижает шанс блокировки. Кстати, у нас вы можете приобрести качественные прокси под любое ГЕО!</div></details>
+                <details><summary>Безопасно ли покупать Telegram Stars на личный профиль?</summary><div>Абсолютно безопасно! Мы зачисляем Звезды исключительно полностью легальным белым способом в виде подарка. Риска блокировки вашего личного аккаунта не существует.</div></details>
+                <details><summary>На каких устройствах работает «Обход ТГ»?</summary><div>Обход работает на абсолютно любых устройствах, где установлен мессенджер Telegram: iPhone, Android, а также на ПК (Windows, macOS). Установка и подключение происходят буквально по нажатию одной ссылки.</div></details>
+                <details><summary>Можно ли использовать купленный аккаунт для рассылки или спама?</summary><div>Рекомендуем использовать аккаунт исключительно для личного использования. Мы не несем прямой ответственности за блокировку аккаунта после того, как вы нарушили правила мессенджера (например, начав использовать его для массовых агрессивных рассылок).</div></details>
+                <details><summary>Выдаёте ли вы почту вместе с профилем?</summary><div>Формат выдачи может зависеть от выбранного типа профиля. В любом случае, самой главной задачей сразу после входа с вашей стороны будет смена облачного пароля и привязка лично вашей электронной почты для защиты.</div></details>
+                <details><summary>Поможет ли «Обход ТГ» против "Вечного обновления"?</summary><div>Да, Обход ТГ — это узкоспециализированное решение именно для мессенджера, которое снимает все ограничения по скорости. Ваш мессенджер будет летать и "вечное обновление" навсегда исчезнет.</div></details>
+                <details><summary>Могу ли я заказать аккаунт страны, которой нет в списке?</summary><div>Конечно! В нашем каталоге для вас присутствует карточка «Другой (Личный запрос)». Просто напишите менеджеру @shiftsel, что вы хотите конкретную страну, и мы попытаемся зарегистрировать профиль специально под ваше уникальное ГЕО.</div></details>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-links">
+                <a onclick='openModal("privacy")'>Конфиденциальность</a>
+                <a onclick='openModal("terms")'>Условия</a>
+                <a onclick='openModal("agreement")'>Соглашение</a>
+                <a onclick='openModal("disclaimer")'>Отказ от ответственности</a>
+            </div>
+            <p>© 2024-2026 Shift Market</p>
+        </footer>
+    </div>
+
+    <div class="search-widget" id="searchWidget">
+        <div class="search-glass">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input class="search-input" id="searchInput" placeholder="Поиск (Турция, 100 звезд)...">
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modalTitle">Документ</h3>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody" data-lenis-prevent></div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            document.addEventListener('contextmenu',e=>e.preventDefault());
+            document.addEventListener('keydown',e=>{
+                if(e.key==='F12'||(e.ctrlKey&&e.shiftKey)||(e.ctrlKey&&['u','s','c','v','x'].includes(e.key.toLowerCase()))){e.preventDefault()}
+            });
+            document.addEventListener('dragstart',e=>e.preventDefault());
+        })();
+
+        const products = [
+            {country:"Казахстан",price:"300+ ₽",type:"Саморег",code:"+77",image:"1.png",category:"account"},
+            {country:"Украина",price:"230+ ₽",type:"Авторег",code:"+380",image:"2.png",category:"account"},
+            {country:"Мексика",price:"150+ ₽",type:"Саморег",code:"+52",image:"3.png",category:"account"},
+            {country:"Бангладеш",price:"100+ ₽",type:"Авторег",code:"+880",image:"4.png",category:"account"},
+            {country:"Чехия",price:"300+ ₽",type:"Саморег",code:"+420",image:"5.png",category:"account"},
+            {country:"Беларусь",price:"400+ ₽",type:"Авторег",code:"+375",image:"6.png",category:"account"},
+            {country:"Израиль",price:"350+ ₽",type:"Саморег",code:"+972",image:"7.png",category:"account"},
+            {country:"Турция",price:"260+ ₽",type:"Саморег",code:"+90",image:"8.png",category:"account"},
+            {country:"Египет",price:"70+ ₽",type:"Авторег",code:"+20",image:"9.png",category:"account"},
+            {country:"США",price:"70+ ₽",type:"Авторег",code:"+1",image:"10.png",category:"account"},
+            {country:"Другой",price:"??? ₽",type:"Личный запрос",code:"+???",image:"11.png",custom:true,category:"account"},
+            
+            { name: "«Обход ТГ»", sub1: "Ускоренный доступ 24/7", sub2: "Срок: 1 неделя", price: "29 ₽", image: "bypass.jpg", category: "bypass" },
+            { name: "«Обход ТГ»", sub1: "Ускоренный доступ 24/7", sub2: "Срок: 2 недели", price: "49 ₽", image: "bypass.jpg", category: "bypass" },
+            { name: "«Обход ТГ»", sub1: "Ускоренный доступ 24/7", sub2: "Срок: 1 месяц", price: "79 ₽", image: "bypass.jpg", category: "bypass" },
+            { name: "«Обход ТГ»", sub1: "Ускоренный доступ 24/7", sub2: "Срок: 2 месяца", price: "139 ₽", image: "bypass.jpg", category: "bypass" },
+            { name: "«Обход ТГ»", sub1: "Ускоренный доступ 24/7", sub2: "Срок: 3 месяца", price: "199 ₽", image: "bypass.jpg", category: "bypass" },
+            
+            { name: "50 Звезд", price: "85 ₽", image: "star.png", category: "stars" },
+            { name: "75 Звезд", price: "124 ₽", image: "star.png", category: "stars" },
+            { name: "100 Звезд", price: "163 ₽", image: "star.png", category: "stars" },
+            { name: "150 Звезд", price: "239 ₽", image: "star.png", category: "stars" },
+            { name: "250 Звезд", price: "390 ₽", discount: "Экономия 12%", image: "star.png", category: "stars" },
+            { name: "350 Звезд", price: "549 ₽", discount: "Экономия 12%", image: "star.png", category: "stars" },
+            { name: "500 Звезд", price: "771 ₽", discount: "Экономия 11%", image: "star.png", category: "stars" },
+            { name: "750 Звезд", price: "1143 ₽", discount: "Экономия 10%", image: "star.png", category: "stars" },
+            { name: "1000 Звезд", price: "1515 ₽", discount: "Экономия 11%", image: "star.png", category: "stars" },
+            { name: "1500 Звезд", price: "2257 ₽", discount: "Экономия 10%", image: "star.png", category: "stars" },
+            { name: "2500 Звезд", price: "3749 ₽", discount: "Экономия 11%", image: "star.png", category: "stars" },
+            { name: "5000 Звезд", price: "7461 ₽", discount: "Экономия 10%", image: "star.png", category: "stars" },
+            { name: "10000 Звезд", price: "14893 ₽", discount: "Экономия 10%", image: "star.png", category: "stars" },
+        ];
+
+        const grid = document.getElementById('catalog');
+        const searchInput = document.getElementById('searchInput');
+
+        function triggerHaptic() { if (navigator.vibrate) navigator.vibrate(50); }
+
+        function renderProducts(filter = '') {
+            grid.innerHTML = '';
+            const lowerFilter = filter.toLowerCase();
+            const filtered = products.filter(p => {
+                const s = p.category === 'account' ? (p.country + p.type + p.code) : 
+                          p.category === 'bypass' ? (p.name + p.sub1 + p.sub2) :
+                          (p.name + (p.discount || ''));
+                return s.toLowerCase().includes(lowerFilter);
+            });
+
+            if (!filtered.length) { grid.innerHTML = '<div class="empty-state">Нет совпадений</div>'; return; }
+
+            const accounts = filtered.filter(p => p.category === 'account');
+            const bypass = filtered.filter(p => p.category === 'bypass');
+            const stars = filtered.filter(p => p.category === 'stars');
+            
+            if (accounts.length) {
+                const s = document.createElement('div');
+                s.style.marginTop = "10px";
+                s.style.textAlign = "center";
+                s.innerHTML = `
+                    <h2 class="section-title" style="justify-content: center; font-size: 2.5rem; margin: 0 0 10px;">
+                        <span style="color: #fff;">ТГ</span> <span style="color: var(--accent);">АККАУНТЫ</span>
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 30px;">
+                        Качественные профили с чистой историей. Мгновенная выдача и полная надежность.
+                    </p>
+                `;
+                grid.appendChild(s);
+
+                const container = document.createElement('div');
+                container.className = 'cards-container';
+                accounts.forEach((p, i) => container.appendChild(createCard(p, i)));
+                grid.appendChild(container);
+            }
+
+            if (bypass.length) {
+                const s = document.createElement('div');
+                s.style.marginTop = accounts.length ? "50px" : "10px";
+                s.style.textAlign = "center";
+                s.innerHTML = `
+                    <h2 class="section-title" style="justify-content: center; font-size: 2.5rem; margin: 0 0 10px;">
+                        <span style="color: #fff;">ОБХОД</span> <span style="color: var(--accent);">ТГ</span>
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 30px;">
+                        Забудьте о блокировках и 'Вечном обновлении'. Ускоренный доступ 24/7.
+                    </p>
+                `;
+                grid.appendChild(s);
+
+                const container = document.createElement('div');
+                container.className = 'cards-container';
+                bypass.forEach((p, i) => container.appendChild(createCard(p, accounts.length + i)));
+                grid.appendChild(container);
+            }
+
+            if (stars.length) {
+                const s = document.createElement('div');
+                s.style.marginTop = (accounts.length || bypass.length) ? "50px" : "10px";
+                s.style.textAlign = "center";
+                s.innerHTML = `
+                    <h2 class="section-title" style="justify-content: center; font-size: 2.5rem; margin: 0 0 10px;">
+                        <span style="color: #fff;">ТГ</span> <span style="color: var(--accent);">ЗВЕЗДЫ</span>
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 30px;">
+                        Моментальное зачисление на ваш аккаунт. Развивайте свои сервисы без ограничений.
+                    </p>
+                `;
+                grid.appendChild(s);
+
+                const container = document.createElement('div');
+                container.className = 'cards-container';
+                stars.forEach((p, i) => container.appendChild(createCard(p, accounts.length + bypass.length + i)));
+                grid.appendChild(container);
+            }
+        }
+
+        function createCard(p, index) {
+            const c = document.createElement('div');
+            c.className = 'card scroll-reveal';
+            const btnText = p.custom ? 'Запрос' : 'Купить';
+            let infoHTML = '';
+            if (p.category === 'account') {
+                infoHTML = `<div class="card-title">${p.country}</div><div class="info-box type">${p.type}</div><div class="info-box">${p.code}</div>`;
+            } else if (p.category === 'bypass') {
+                infoHTML = `<div class="card-title">${p.name}</div><div class="info-box type">${p.sub1}</div><div class="info-box">${p.sub2}</div>`;
+            } else {
+                infoHTML = `<div class="card-title">${p.name}</div>${p.discount ? `<div class="info-box discount">${p.discount}</div>` : '<div style="height:44px"></div>'}`;
+            }
+
+            c.innerHTML = `
+                <div class="card-img" ${p.category === 'bypass' ? 'style="background: #fff;"' : ''}><img src="${p.image}" alt=""></div>
+                ${infoHTML}
+                <div class="price-badge">${p.price}</div>
+                <button class="buy-btn" onclick="triggerHaptic(); window.open('https://t.me/shiftsel','_blank')">${btnText}</button>
+            `;
+            setTimeout(() => { c.classList.add('revealed'); observer.observe(c); }, 50 + index * 50);
+            return c;
+        }
+
+        const docs = {
+            privacy: `<h4>Политика конфиденциальности</h4><p>1.1. Настоящая Политика конфиденциальности (далее — «Политика») разработана в соответствии с требованиями Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые сервисом <b>Shift Market</b> (далее — «Оператор», «Сервис», «Мы»).</p>
+<p>1.2. Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.</p>
+<p>1.3. Настоящая Политика применяется ко всей информации, которую Оператор может получить о посетителях и пользователях Сервиса.</p>
+<p>1.4. <b>Используя Сервис, Пользователь выражает своё безоговорочное согласие с настоящей Политикой и указанными в ней условиями обработки его персональных данных.</b> В случае несогласия с данными условиями Пользователь должен воздержаться от использования Сервиса.</p>
+
+<h4>2. Основные понятия</h4>
+<p>2.1. <b>Персональные данные</b> — любая информация, относящаяся к прямо или косвенно определённому или определяемому физическому лицу (субъекту персональных данных).</p>
+<p>2.2. <b>Обработка персональных данных</b> — любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение персональных данных.</p>
+<p>2.3. <b>Конфиденциальность персональных данных</b> — обязательное для соблюдения Оператором или иным получившим доступ к персональным данным лицом требование не допускать их распространения без согласия субъекта персональных данных или наличия иного законного основания.</p>
+<p>2.4. <b>Пользователь</b> — любое лицо, имеющее доступ к Сервису посредством сети Интернет и использующее его.</p>
+
+<h4>3. Состав персональных данных</h4>
+<p>3.1. Оператор может обрабатывать следующие персональные данные Пользователя:</p>
+<ul>
+<li>Имя пользователя (никнейм) в мессенджере Telegram</li>
+<li>Идентификатор пользователя в мессенджере Telegram</li>
+<li>Сведения о совершённых транзакциях и приобретённых услугах</li>
+<li>Дата и время обращения к Сервису</li>
+<li>Техническая информация о устройстве (тип браузера, IP-адрес, операционная система)</li>
+<li>Иные данные, добровольно предоставленные Пользователем</li>
+</ul>
+<p>3.2. <i>Оператор не осуществляет сбор и обработку специальных категорий персональных данных, касающихся расовой, национальной принадлежности, политических взглядов, религиозных или философских убеждений, состояния здоровья, интимной жизни.</i></p>
+
+<h4>4. Цели обработки персональных данных</h4>
+<p>4.1. Персональные данные Пользователя обрабатываются в следующих целях:</p>
+<ul>
+<li>Идентификация Пользователя для оказания услуг</li>
+<li>Предоставление Пользователю доступа к функционалу Сервиса</li>
+<li>Обработка заказов и выполнение обязательств перед Пользователем</li>
+<li>Связь с Пользователем для уточнения деталей заказа</li>
+<li>Информирование Пользователя о статусе заказа</li>
+<li>Улучшение качества Сервиса и разработка новых функций</li>
+<li>Проведение статистических и иных исследований на основе обезличенных данных</li>
+</ul>
+
+<h4>5. Принципы обработки персональных данных</h4>
+<p>5.1. Обработка персональных данных осуществляется на законной и справедливой основе.</p>
+<p>5.2. Обработка персональных данных ограничивается достижением конкретных, заранее определённых и законных целей.</p>
+<p>5.3. Не допускается объединение баз данных, содержащих персональные данные, обработка которых осуществляется в целях, несовместимых между собой.</p>
+<p>5.4. Обработке подлежат только персональные данные, которые отвечают целям их обработки.</p>
+<p>5.5. Содержание и объём обрабатываемых персональных данных соответствуют заявленным целям обработки.</p>
+<p>5.6. При обработке персональных данных обеспечивается точность персональных данных, их достаточность и актуальность.</p>
+<p>5.7. Хранение персональных данных осуществляется в форме, позволяющей определить субъекта персональных данных, не дольше, чем этого требуют цели обработки.</p>
+
+<h4>6. Конфиденциальность и защита данных</h4>
+<blockquote><b>ВАЖНО:</b> Оператор гарантирует полную конфиденциальность персональных данных Пользователей. Персональные данные не передаются, не продаются, не обмениваются и не разглашаются каким-либо третьим лицам ни при каких обстоятельствах.</blockquote>
+<p>6.1. Оператор принимает необходимые организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа, уничтожения, изменения, блокирования, копирования, предоставления, распространения, а также от иных неправомерных действий в отношении персональных данных.</p>
+<p>6.2. <b>Оператор не передаёт персональные данные третьим лицам</b>, включая, но не ограничиваясь:</p>
+<ul>
+<li>Государственным органам и организациям (за исключением случаев, прямо предусмотренных действующим законодательством Российской Федерации)</li>
+<li>Коммерческим организациям</li>
+<li>Физическим лицам</li>
+<li>Правоохранительным органам (за исключением случаев, когда такая передача прямо предусмотрена вступившим в законную силу судебным решением)</li>
+<li>Иным третьим лицам</li>
+</ul>
+<p>6.3. <i>В случае поступления запросов от государственных органов, Оператор вправе отказать в предоставлении информации, если такой запрос не соответствует требованиям действующего законодательства или не подкреплён соответствующим судебным решением.</i></p>
+<p>6.4. Оператор не ведёт журналирование действий Пользователей после оказания услуги и не хранит информацию о дальнейшем использовании приобретённых товаров/услуг.</p>
+
+<h4>7. Права Пользователя</h4>
+<p>7.1. Пользователь имеет право:</p>
+<ul>
+<li>Получать информацию, касающуюся обработки его персональных данных</li>
+<li>Требовать уточнения своих персональных данных, их блокирования или уничтожения</li>
+<li>Отозвать согласие на обработку персональных данных</li>
+<li>Обжаловать действия или бездействие Оператора в уполномоченный орган по защите прав субъектов персональных данных</li>
+</ul>
+<p>7.2. Для реализации указанных прав Пользователь может обратиться к Оператору через указанные контактные данные.</p>
+
+<h4>8. Cookies и технические данные</h4>
+<p>8.1. Сервис может использовать файлы <code>cookies</code> для обеспечения корректной работы и улучшения пользовательского опыта.</p>
+<p>8.2. Cookies представляют собой небольшие текстовые файлы, сохраняемые на устройстве Пользователя.</p>
+<p>8.3. Пользователь может отключить использование cookies в настройках своего браузера, однако это может повлиять на функциональность Сервиса.</p>
+<p>8.4. Техническая информация (IP-адрес, тип устройства, браузер) собирается автоматически и используется исключительно для обеспечения работоспособности Сервиса.</p>
+
+<h4>9. Изменение Политики</h4>
+<p>9.1. Оператор имеет право вносить изменения в настоящую Политику конфиденциальности без предварительного уведомления Пользователей.</p>
+<p>9.2. Новая редакция Политики вступает в силу с момента её размещения на Сервисе, если иное не предусмотрено новой редакцией.</p>
+<p>9.3. Продолжение использования Сервиса после внесения изменений означает согласие Пользователя с новой редакцией Политики.</p>
+<p>9.4. Актуальная версия Политики всегда доступна на Сервисе.</p>
+
+<h4>10. Заключительные положения</h4>
+<p>10.1. Настоящая Политика разработана в соответствии с законодательством Российской Федерации.</p>
+<p>10.2. Все возможные споры, возникающие в связи с настоящей Политикой, подлежат разрешению в соответствии с законодательством Российской Федерации.</p>
+<p>10.3. Если отдельные положения настоящей Политики будут признаны недействительными, это не влияет на действительность остальных положений.</p>
+<p>10.4. <b>Используя Сервис, Пользователь подтверждает, что ознакомился с настоящей Политикой и выражает своё полное и безоговорочное согласие со всеми её положениями.</b></p>`,
+            terms: `<h4>1. Общие положения</h4>
+<p>1.1. Настоящие Условия использования (далее — «Условия») регулируют отношения между сервисом <b>Shift Market</b> (далее — «Сервис», «Администрация», «Мы») и физическим лицом (далее — «Пользователь», «Вы»), использующим Сервис.</p>
+<p>1.2. Настоящие Условия разработаны в соответствии с Гражданским кодексом Российской Федерации, Законом РФ от 07.02.1992 № 2300-1 «О защите прав потребителей», Федеральным законом от 27.07.2006 № 149-ФЗ «Об информации, информационных технологиях и о защите информации» и иными нормативными правовыми актами Российской Федерации.</p>
+<p>1.3. <b>Использование Сервиса означает безоговорочное принятие всех условий настоящего документа.</b> Если Вы не согласны с какими-либо положениями Условий, Вы не вправе использовать Сервис.</p>
+<p>1.4. Администрация оставляет за собой право в любое время изменять, добавлять или удалять пункты настоящих Условий без предварительного уведомления Пользователя.</p>
+<p>1.5. Продолжение использования Сервиса после внесения изменений означает принятие Пользователем этих изменений.</p>
+
+<h4>2. Описание Сервиса</h4>
+<p>2.1. Сервис представляет собой информационную площадку, предоставляющую услуги по передаче прав доступа к учётным записям (аккаунтам) мессенджера Telegram.</p>
+<p>2.2. Все товары и услуги предоставляются на условиях <i>«как есть»</i> (as is) без каких-либо гарантий, явных или подразумеваемых.</p>
+<p>2.3. Сервис не является официальным представителем, партнёром или аффилированным лицом компании Telegram Messenger Inc.</p>
+<p>2.4. Сервис выступает исключительно в качестве посредника и не несёт ответственности за работоспособность, функциональность или соответствие товаров каким-либо ожиданиям Пользователя.</p>
+
+<h4>3. Регистрация и доступ</h4>
+<p>3.1. Для использования Сервиса регистрация на сайте не требуется.</p>
+<p>3.2. Взаимодействие с Сервисом осуществляется через мессенджер Telegram посредством обращения к уполномоченному представителю Администрации.</p>
+<p>3.3. Пользователь обязуется предоставлять достоверную информацию при обращении в Сервис.</p>
+<p>3.4. Администрация не несёт ответственности за последствия предоставления Пользователем недостоверной информации.</p>
+
+<h4>4. Возрастные ограничения</h4>
+<blockquote><b>ВНИМАНИЕ:</b> Использование Сервиса разрешено исключительно лицам, достигшим восемнадцатилетнего возраста (18 лет). Используя Сервис, Вы подтверждаете, что Вам исполнилось 18 лет.</blockquote>
+<p>4.1. Лица, не достигшие возраста 18 лет, не имеют права использовать Сервис.</p>
+<p>4.2. Администрация не несёт ответственности за использование Сервиса несовершеннолетними лицами.</p>
+<p>4.3. В случае выявления факта использования Сервиса несовершеннолетним лицом, Администрация вправе отказать в предоставлении услуг без объяснения причин.</p>
+
+<h4>5. Права и обязанности Пользователя</h4>
+<p>5.1. <b>Пользователь имеет право:</b></p>
+<ul>
+<li>Получать информацию о товарах и услугах Сервиса</li>
+<li>Приобретать товары и услуги в соответствии с установленным порядком</li>
+<li>Обращаться в Администрацию по возникающим вопросам</li>
+<li>Участвовать в реферальной программе</li>
+</ul>
+<p>5.2. <b>Пользователь обязуется:</b></p>
+<ul>
+<li>Соблюдать положения настоящих Условий</li>
+<li>Использовать приобретённые товары в соответствии с законодательством Российской Федерации</li>
+<li>Не использовать товары для осуществления противоправной деятельности</li>
+<li>Не использовать товары для нарушения прав и законных интересов третьих лиц</li>
+<li>Не использовать товары для рассылки спама, мошенничества, распространения вредоносного программного обеспечения</li>
+<li>Самостоятельно нести ответственность за все действия, совершённые с использованием приобретённых товаров</li>
+<li>Не предпринимать попыток несанкционированного доступа к системам Сервиса</li>
+</ul>
+
+<h4>6. Права и обязанности Администрации</h4>
+<p>6.1. <b>Администрация имеет право:</b></p>
+<ul>
+<li>Изменять условия предоставления услуг в одностороннем порядке</li>
+<li>Приостанавливать или прекращать работу Сервиса без предварительного уведомления</li>
+<li>Отказывать в предоставлении услуг без объяснения причин</li>
+<li>Устанавливать цены на товары и услуги</li>
+<li>Проводить профилактические работы с временным приостановлением работы Сервиса</li>
+</ul>
+<p>6.2. <b>Администрация обязуется:</b></p>
+<ul>
+<li>Предоставлять товары/услуги надлежащего качества на момент передачи</li>
+<li>Обеспечивать конфиденциальность данных Пользователя</li>
+<li>Рассматривать обращения Пользователей</li>
+</ul>
+
+<h4>7. Порядок оплаты</h4>
+<p>7.1. Стоимость товаров и услуг указана на Сервисе в рублях Российской Федерации.</p>
+<p>7.2. Оплата производится по реквизитам, предоставленным представителем Администрации.</p>
+<p>7.3. Сделка считается завершённой с момента передачи товара Пользователю.</p>
+<p>7.4. Администрация вправе изменять цены на товары и услуги без предварительного уведомления.</p>
+<p>7.5. Цена товара фиксируется на момент подтверждения заказа.</p>
+
+<h4>8. Возврат и обмен</h4>
+<blockquote><b>ОБРАТИТЕ ВНИМАНИЕ:</b> В связи с особенностями товара (цифровые услуги, право доступа к учётным записям), возврат денежных средств после передачи товара Пользователю не производится, что соответствует статье 26.1 Закона РФ «О защите прав потребителей» в части дистанционной продажи товаров.</blockquote>
+<p>8.1. Товар считается переданным надлежащим образом с момента предоставления Пользователю доступа к учётной записи.</p>
+<p>8.2. Замена товара производится исключительно в случае, если товар был неработоспособен на момент передачи, при условии предоставления видеодоказательства.</p>
+<p>8.3. Срок подачи претензии на замену — не более 10 (десяти) минут с момента передачи товара.</p>
+<p>8.4. Претензии, поданные позднее указанного срока, не рассматриваются.</p>
+
+<h4>9. Интеллектуальная собственность</h4>
+<p>9.1. Все материалы, размещённые на Сервисе (тексты, графика, дизайн, логотипы), являются интеллектуальной собственностью Администрации.</p>
+<p>9.2. Использование материалов Сервиса без письменного согласия Администрации запрещено.</p>
+<p>9.3. Пользователь не приобретает никаких прав интеллектуальной собственности на товары, кроме права использования.</p>
+
+<h4>10. Ограничение ответственности</h4>
+<p>10.1. <b>Администрация не несёт ответственности за:</b></p>
+<ul>
+<li>Действия Пользователя после передачи товара</li>
+<li>Использование товара в противоправных целях</li>
+<li>Блокировку или ограничение учётных записей со стороны Telegram</li>
+<li>Утерю доступа к учётной записи по вине Пользователя</li>
+<li>Прямые или косвенные убытки Пользователя</li>
+<li>Упущенную выгоду</li>
+<li>Действия третьих лиц</li>
+<li>Технические сбои в работе мессенджера Telegram</li>
+<li>Несоответствие товара ожиданиям Пользователя</li>
+</ul>
+<p>10.2. Вся ответственность за использование товара после его передачи лежит исключительно на Пользователе.</p>
+<p>10.3. Пользователь осознаёт и принимает все риски, связанные с приобретением и использованием товаров.</p>
+
+<h4>11. Разрешение споров</h4>
+<p>11.1. Все споры и разногласия, возникающие между сторонами, подлежат разрешению путём переговоров.</p>
+<p>11.2. В случае невозможности разрешения спора путём переговоров, спор подлежит рассмотрению в соответствии с законодательством Российской Федерации.</p>
+<p>11.3. К отношениям между Пользователем и Администрацией применяется законодательство Российской Федерации.</p>
+
+<h4>12. Заключительные положения</h4>
+<p>12.1. Настоящие Условия вступают в силу с момента начала использования Сервиса Пользователем.</p>
+<p>12.2. Недействительность отдельных положений Условий не влечёт недействительности остальных положений.</p>
+<p>12.3. <b>Используя Сервис, Пользователь подтверждает, что полностью ознакомился с настоящими Условиями, понимает их и принимает в полном объёме.</b></p>`,
+            agreement: `<h4>1. Предмет Соглашения</h4>
+<p>1.1. Настоящее Пользовательское соглашение (далее — «Соглашение») является публичной офертой в соответствии со статьёй 437 Гражданского кодекса Российской Федерации и определяет условия использования сервиса <b>Shift Market</b> (далее — «Сервис», «Продавец», «Исполнитель») физическими лицами (далее — «Пользователь», «Покупатель», «Заказчик»).</p>
+<p>1.2. Предметом настоящего Соглашения является возмездное оказание Исполнителем услуг по передаче Заказчику прав доступа к учётным записям (аккаунтам) мессенджера Telegram (далее — «Товар», «Услуга»).</p>
+<p>1.3. Товар является цифровой услугой и не подлежит физической доставке.</p>
+<p>1.4. <b>Акцептом (принятием) настоящей оферты является факт использования Сервиса, обращения к представителям Сервиса для приобретения Товара или совершение платежа.</b> С момента акцепта Соглашение считается заключённым на изложенных в нём условиях.</p>
+
+<h4>2. Условия заключения Соглашения</h4>
+<p>2.1. Соглашение регулируется нормами Гражданского кодекса Российской Федерации, в том числе положениями главы 39 ГК РФ «Возмездное оказание услуг».</p>
+<p>2.2. Пользователь подтверждает, что на момент заключения Соглашения:</p>
+<ul>
+<li>Является полностью дееспособным физическим лицом</li>
+<li>Достиг возраста 18 (восемнадцати) лет</li>
+<li>Действует добровольно, без принуждения</li>
+<li>Полностью осознаёт характер и последствия совершаемых действий</li>
+<li>Ознакомился со всеми документами Сервиса и согласен с ними</li>
+</ul>
+<p>2.3. Соглашение действует бессрочно с момента его акцепта, если иное не предусмотрено отдельными положениями.</p>
+
+<h4>3. Порядок оказания услуг</h4>
+<p>3.1. <b>Процедура приобретения Товара включает следующие этапы:</b></p>
+<p><b>Этап 1. Заявка.</b> Пользователь обращается к представителю Сервиса через мессенджер Telegram и сообщает о желании приобрести конкретный Товар.</p>
+<p><b>Этап 2. Подтверждение.</b> Представитель Сервиса подтверждает наличие Товара и сообщает его стоимость.</p>
+<p><b>Этап 3. Оплата.</b> Пользователю предоставляются реквизиты для оплаты. Пользователь производит оплату в полном объёме.</p>
+<p><b>Этап 4. Передача.</b> После подтверждения поступления оплаты Исполнитель передаёт Пользователю доступ к учётной записи (номер телефона, код подтверждения или иные данные для входа).</p>
+<p><b>Этап 5. Завершение.</b> С момента успешного входа Пользователя в учётную запись Услуга считается оказанной в полном объёме, а обязательства Исполнителя — исполненными.</p>
+<p>3.2. Датой оказания услуги считается дата передачи Пользователю данных для доступа к учётной записи.</p>
+
+<h4>4. Стоимость и порядок расчётов</h4>
+<p>4.1. Стоимость Товаров указывается на Сервисе в рублях Российской Федерации и является ориентировочной.</p>
+<p>4.2. Окончательная стоимость согласовывается с представителем Сервиса и зависит от характеристик конкретного Товара.</p>
+<p>4.3. Оплата производится в безналичной форме по реквизитам, предоставленным Исполнителем.</p>
+<p>4.4. Обязательство по оплате считается исполненным с момента зачисления денежных средств на счёт Исполнителя.</p>
+<p>4.5. При использовании реферального промокода Пользователю предоставляется скидка в размере 8% (восьми процентов) от стоимости Товара.</p>
+
+<h4>5. Гарантии и ограничения</h4>
+<blockquote><b>КРИТИЧЕСКИ ВАЖНО:</b> Исполнитель гарантирует работоспособность Товара исключительно на момент его передачи Пользователю. С момента передачи Товара все риски, связанные с его использованием, сохранностью и функционированием, переходят к Пользователю.</blockquote>
+<p>5.1. <b>Исполнитель гарантирует:</b></p>
+<ul>
+<li>Работоспособность учётной записи на момент передачи</li>
+<li>Возможность входа в учётную запись на момент передачи</li>
+<li>Соответствие Товара заявленным характеристикам (страна, тип регистрации)</li>
+</ul>
+<p>5.2. <b>Исполнитель НЕ гарантирует:</b></p>
+<ul>
+<li>Бессрочную работоспособность учётной записи</li>
+<li>Отсутствие ограничений или блокировок в будущем</li>
+<li>Пригодность Товара для каких-либо конкретных целей Пользователя</li>
+<li>Совместимость с какими-либо программами, сервисами или устройствами</li>
+<li>Сохранность данных, контактов, переписок в учётной записи</li>
+</ul>
+<p>5.3. Товар предоставляется на условиях <i>«как есть»</i> (as is) без каких-либо дополнительных гарантий.</p>
+
+<h4>6. Переход ответственности</h4>
+<p>6.1. <b>С момента передачи Товара (учётной записи) Пользователю:</b></p>
+<ul>
+<li>Вся полнота ответственности за использование Товара переходит к Пользователю</li>
+<li>Пользователь самостоятельно несёт ответственность за все действия, совершённые с использованием учётной записи</li>
+<li>Пользователь принимает на себя все риски, связанные с возможной блокировкой или ограничением учётной записи</li>
+<li>Исполнитель освобождается от какой-либо ответственности за дальнейшую судьбу Товара</li>
+</ul>
+<p>6.2. Исполнитель не осуществляет контроль за действиями Пользователя после передачи Товара и не имеет технической возможности для такого контроля.</p>
+<p>6.3. Пользователь обязуется не использовать Товар для совершения противоправных действий, включая, но не ограничиваясь: мошенничество, распространение спама, нарушение прав третьих лиц, распространение запрещённого контента.</p>
+<p>6.4. <i>В случае использования Товара в противоправных целях вся ответственность, включая уголовную, административную и гражданско-правовую, возлагается исключительно на Пользователя.</i></p>
+
+<h4>7. Условия замены Товара</h4>
+<p>7.1. Замена Товара производится исключительно при одновременном соблюдении следующих условий:</p>
+<ul>
+<li>Товар был неработоспособен на момент передачи</li>
+<li>Пользователь предоставил видеозапись процесса входа, подтверждающую неработоспособность</li>
+<li>Претензия подана не позднее 10 (десяти) минут с момента передачи Товара</li>
+<li>На видеозаписи отображается дата и время, соответствующие моменту передачи</li>
+</ul>
+<p>7.2. Замена не производится в случаях:</p>
+<ul>
+<li>Блокировки или ограничения учётной записи после успешного входа</li>
+<li>Утери доступа по вине Пользователя</li>
+<li>Отсутствия видеодоказательства</li>
+<li>Пропуска срока подачи претензии</li>
+<li>Нарушения Пользователем правил использования Telegram</li>
+</ul>
+<p>7.3. Решение о замене принимается Исполнителем единолично и является окончательным.</p>
+
+<h4>8. Реферальная программа</h4>
+<p>8.1. Пользователь имеет право участвовать в реферальной программе Сервиса.</p>
+<p>8.2. Условия реферальной программы:</p>
+<ul>
+<li>Скидка приглашённому другу — 8% (восемь процентов) от стоимости Товара</li>
+<li>Вознаграждение пригласившему — 10% (десять процентов) от суммы, оплаченной приглашённым</li>
+</ul>
+<p>8.3. Для получения реферального кода необходимо обратиться к представителю Сервиса.</p>
+<p>8.4. Накопленное вознаграждение может быть использовано для приобретения Товаров или выведено на банковскую карту.</p>
+<p>8.5. Исполнитель оставляет за собой право изменять условия реферальной программы.</p>
+
+<h4>9. Конфиденциальность</h4>
+<p>9.1. Стороны обязуются сохранять конфиденциальность информации, полученной в ходе исполнения настоящего Соглашения.</p>
+<p>9.2. Исполнитель не передаёт данные Пользователей третьим лицам.</p>
+<p>9.3. Обработка персональных данных осуществляется в соответствии с Политикой конфиденциальности Сервиса.</p>
+
+<h4>10. Ответственность сторон</h4>
+<p>10.1. За неисполнение или ненадлежащее исполнение обязательств по настоящему Соглашению стороны несут ответственность в соответствии с законодательством Российской Федерации.</p>
+<p>10.2. Исполнитель не несёт ответственности за убытки Пользователя, возникшие в результате:</p>
+<ul>
+<li>Использования или невозможности использования Товара</li>
+<li>Действий третьих лиц, включая Telegram Messenger Inc.</li>
+<li>Блокировки или ограничения учётной записи</li>
+<li>Противоправных действий Пользователя</li>
+</ul>
+<p>10.3. Совокупная ответственность Исполнителя по настоящему Соглашению не может превышать стоимости оплаченного Товара.</p>
+
+<h4>11. Форс-мажор</h4>
+<p>11.1. Стороны освобождаются от ответственности за неисполнение обязательств, если оно явилось следствием обстоятельств непреодолимой силы (форс-мажор).</p>
+<p>11.2. К обстоятельствам непреодолимой силы относятся: стихийные бедствия, военные действия, решения государственных органов, технические сбои в работе сети Интернет или мессенджера Telegram.</p>
+
+<h4>12. Разрешение споров</h4>
+<p>12.1. Все споры разрешаются путём переговоров.</p>
+<p>12.2. При невозможности достижения согласия спор передаётся на рассмотрение в суд по месту нахождения Исполнителя в соответствии с законодательством Российской Федерации.</p>
+
+<h4>13. Заключительные положения</h4>
+<p>13.1. Настоящее Соглашение составлено на русском языке.</p>
+<p>13.2. Если какое-либо положение Соглашения будет признано недействительным, это не влияет на действительность остальных положений.</p>
+<p>13.3. Исполнитель вправе в одностороннем порядке изменять условия Соглашения.</p>
+<p>13.4. <b>Принимая настоящее Соглашение, Пользователь подтверждает, что полностью осознаёт юридические последствия своих действий, согласен со всеми условиями и обязуется их соблюдать.</b></p>`,
+            disclaimer: `<h4>Преамбула</h4>
+<p>Настоящий документ «Отказ от ответственности» (далее — «Отказ», «Дисклеймер») является неотъемлемой частью Пользовательского соглашения сервиса <b>Shift Market</b> (далее — «Сервис», «Администрация», «Исполнитель», «Мы») и определяет пределы ответственности Сервиса перед физическими лицами (далее — «Пользователь», «Покупатель», «Вы»), использующими Сервис или приобретающими товары/услуги через Сервис.</p>
+
+<blockquote><b>КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ:</b> Используя Сервис и/или приобретая товары/услуги, Вы подтверждаете, что полностью ознакомились с настоящим Отказом от ответственности, понимаете его содержание и безоговорочно принимаете все изложенные в нём условия. Вы осознаёте и добровольно принимаете на себя все риски, связанные с приобретением и использованием товаров.</blockquote>
+
+<h4>1. Общие положения об ответственности</h4>
+<p>1.1. Сервис предоставляет товары и услуги на условиях <b>«как есть»</b> (as is) и <b>«как доступно»</b> (as available), без каких-либо гарантий, явно выраженных или подразумеваемых.</p>
+<p>1.2. Сервис не даёт никаких гарантий относительно:</p>
+<ul>
+<li>Бесперебойной работы товаров после их передачи</li>
+<li>Соответствия товаров каким-либо конкретным целям использования</li>
+<li>Отсутствия ошибок, сбоев или ограничений в работе товаров</li>
+<li>Совместимости товаров с какими-либо программами, устройствами или сервисами</li>
+<li>Сохранности данных, связанных с товаром</li>
+<li>Удовлетворения ожиданий Пользователя</li>
+</ul>
+
+<h4>2. Переход ответственности к Покупателю</h4>
+<blockquote><b>ВАЖНЕЙШЕЕ УСЛОВИЕ:</b> С момента передачи товара (учётной записи) Покупателю вся полнота ответственности за использование данного товара, за любые действия, совершённые с его использованием, а также за все последствия такого использования переходит исключительно и безоговорочно к Покупателю.</blockquote>
+<p>2.1. Покупатель принимает на себя полную ответственность за:</p>
+<ul>
+<li>Все действия, совершённые с использованием приобретённого товара</li>
+<li>Соблюдение законодательства Российской Федерации при использовании товара</li>
+<li>Соблюдение правил использования мессенджера Telegram</li>
+<li>Соблюдение прав и законных интересов третьих лиц</li>
+<li>Сохранность и безопасность товара после его получения</li>
+<li>Все последствия использования или невозможности использования товара</li>
+</ul>
+
+<h4>3. Полное освобождение от ответственности</h4>
+<p>3.1. <b>Сервис полностью освобождается от какой-либо ответственности перед Покупателем и/или третьими лицами за:</b></p>
+<ul>
+<li>Блокировку, ограничение или удаление учётной записи со стороны Telegram</li>
+<li>Утерю доступа к учётной записи по любым причинам после передачи</li>
+<li>Использование товара для рассылки спама или мошенничества</li>
+<li>Прямые или косвенные убытки, упущенную выгоду</li>
+</ul>
+
+<h4>4. Конфиденциальность</h4>
+<blockquote><b>ГАРАНТИЯ КОНФИДЕНЦИАЛЬНОСТИ:</b> Сервис не передаёт, не продаёт, не обменивает и не разглашает персональные данные Пользователей и информацию о совершённых сделках каким-либо третьим лицам ни при каких обстоятельствах.</blockquote>
+<p>5.1. <b>Сервис НЕ передаёт данные Пользователей государственным или иным органам без судебного решения.</b></p>
+
+<h4>5. Подтверждение согласия</h4>
+<p>9.1. <b>Используя Сервис и/или приобретая товары, Покупатель подтверждает, что осознает все риски и несет за них полную ответственность.</b></p>`
+        };
+
+        function openModal(t) {
+            triggerHaptic();
+            document.getElementById('modalTitle').textContent = t.toUpperCase();
+            document.getElementById('modalBody').innerHTML = docs[t];
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        searchInput.addEventListener('input', e => renderProducts(e.target.value));
+        document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target.id === 'modalOverlay') closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('revealed'); });
+        }, { threshold: 0.1 });
+
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 2
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
